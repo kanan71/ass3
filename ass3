@@ -1,0 +1,533 @@
+1.	Write a program to perform the basic arithmetic operations(ADD,SUB,MUL,DIVIDE)
+clc;
+clear all;
+close all;
+
+a=imread('cameraman.tif');
+b=imread('rice2.png');
+[r c]=size(b);
+a1=imresize(a,[r c]);
+
+c=imadd(a1,b);                % addition
+d=imsubtract(a1,b);           % subtraction
+e=immultiply(a1,b);           % multiplication
+f=imdivide(a1,b);             % division
+
+subplot(331),imshow(a1),title('Image 1')
+subplot(332),imshow(b),title('Image 2')
+subplot(333),imshow(c),title('Addition')
+subplot(334),imshow(d),title('Subtraction')
+subplot(335),imshow(e),title('Multiplication')
+subplot(336),imshow(f),title('Division')
+
+Output:
+
+ 
+
+
+
+
+
+
+
+
+
+
+2.	Write a program to perform basic logical operations on the given image (AND, XOR, OR) and to flip an image.
+%Reading Required Images & required Preprocessing
+clc;
+clear all;
+close all;
+x=imread('plus.jpg');
+imshow(x);
+title('Plus Structure');
+figure;
+y=imread('Octagon2.jpg');
+[a b c]=size(x);
+y=imresize(y,[a, b]);
+imshow(y);
+title('Octagon Structure');
+
+%And Operation
+figure;
+z=bitand(x, y);
+imshow(z);
+title('Output of And operation');
+%Or Operation
+figure;
+z=bitor(x,y);
+imshow(z);
+title('Output of Or operation');
+
+%Not Operation
+z=bitcmp(x);
+imshow(z);
+title('Output of Not operation');
+%XOR
+figure;
+z=bitxor(x, y);
+imshow(z);
+title('Output of XOR operation');
+
+Output:
+    
+    
+
+
+        %Flip an Image
+
+I=imread('cat.tif');
+subplot(2,2,1);
+imshow(I);
+title('Original Image');
+Ir=flipdim(I,2);
+subplot(2,2,2);
+imshow(Ir);
+title('Flipped Image');
+
+Output:
+ 
+
+3.	Write a program to get negative of a given image.
+clc;
+a=imread('coins.png');
+imshow(a);
+title('Original Image');
+
+b=imcomplement(a);   
+figure;
+imshow(b);
+title('Negative Image');
+
+Output:
+   
+4.	Write a program to perform log transformation of the image. 
+clc;
+clear all;
+close all;
+I=imread('cameraman.tif');
+imshow(I);
+title('Original Image');
+
+I2=im2double(I);
+c=3;
+a=c*log(1+I2);
+figure
+imshow(a);
+title('Log Transformation')
+
+Output:
+   
+5.	Write a program for power law transformation of the given image. 
+clc; clear all;
+
+c=1;
+Gamma=input('Enter the Gamma values = ');       % Must be vector, Ex:[3 4 5]
+x=imread('cameraman.bmp');
+x1=double(x);      
+y=c*(x1.^Gamma(1)); 
+
+subplot(121),imshow(x), title('Original image')
+subplot(122),imshow((y),[]), title('Power Law')
+
+Output:
+Enter the Gamma values = 
+3
+ 
+
+6.	Write a program to perform contrast stretching.
+ 
+X = imread('coins.png'); %reading a grayscale image
+figure(1);
+imshow(X);
+title('Original Image')
+a = min(X(:));%minimum pixel of image X
+b = max(X(:));%maximum pixel of image X
+X= (X-a).*(255/(b-a));%just using the formula above
+figure(2);
+imshow(X);
+title('Contrast Streached Image')
+
+Output:
+   
+7.	Write a program to perform grey level slicing of the image  
+
+clc;clear all;
+image=input('Enter slicing source file :');
+pixelmat=imread(image);
+info=imfinfo(image);
+figure
+subplot(1,2,1);
+imshow(pixelmat);
+a=input('Enter value of a :');
+b=input('Enter value of b :')
+high_gray=input('Enter the value of high gray level :');
+low_gray=input('Enter the value of low gray level :');
+for i=1:info.Height
+    for j=1:info.Width
+        if(pixelmat(i,j)<a)
+            pixelmat(i,j)=low_gray;
+        elseif(pixelmat(i,j)>=a && pixelmat(i,j)<=b)
+            pixelmat(i,j)=high_gray;
+        else
+            pixelmat(i,j)=low_gray;
+        end
+    end
+end
+subplot(1,2,2)
+imshow(pixelmat);
+
+Output:
+ 
+
+
+
+
+8.	Write a program to perform bit plane slicing of the image 
+
+clc; clear;
+         A=imread('testpat1.png');
+[row,col]=size(A);
+subplot(3,3,1), imshow(A), title('Original Image');
+C=zeros(row,col,8);
+for k=1:8
+    for i=1:row
+        for j=1:col
+            C(i,j,k)=bitget(A(i,j),k);        %Bit slicing
+        end
+    end
+    subplot(3,3,k+1), imshow(C(:,:,k)), title(['Bit Plane ',num2str(k-1)]);
+end
+
+Output:
+ 
+
+9.	Write a program to enhance the image using box filter 
+
+clc; clear all; close all;
+
+a=imread('coins.png');
+a=rgb2gray(a);
+mask=(1/9)*[1 1 1;1 1 1;1 1 1];
+
+b=conv2(double(a),double(mask));
+c=uint8(b);
+
+subplot(2,2,1), imshow(a), title('Original Image');
+subplot(2,2,2), imshow(c), title('Box Filter Image');
+
+Output:
+ 
+
+
+
+
+10.	Write a program to enhance the image using weighted filter 
+
+clc;
+clear all;
+close all;
+image1=imread('coins.png');
+image1=rgb2gray(image1);
+mask3=(1/16)*[1 2 1;2 4 2;1 2 1];
+image_w=conv2(double(image1),double(mask3));
+image_w=uint8(image_w);
+subplot(1,2,1);
+imshow(image1);
+title('Original Image');
+subplot(1,2,2);
+imshow(image_w);
+title('Applying Weighted Filter');
+
+Output: 
+ 
+11.	Write a program to enhance the image using median filter 
+
+clc; clear all; close all;
+
+a=imread('coins.png');
+a=rgb2gray(a);
+
+n=imnoise(a,'salt & pepper',0.1);
+d=medfilt2(n);
+d1=medfilt2(n,[3 3],'zeros');
+d2=medfilt2(n,[5 5],'zeros');
+
+subplot(3,2,1), imshow(a), title('Original Image');
+subplot(3,2,2), imshow(n), title('Salt & Pepper Noise Image');
+subplot(3,2,3), imshow(d), title('Median Filtered Image');
+subplot(3,2,4), imshow(d1),title('Image after median filtering with 3*3');
+subplot(3,2,5), imshow(d2),title('Image after median filtering with 5*5');
+
+
+Output:
+ 
+12.	Write a program to enhance the image using laplacian filter
+
+clc;
+close all;
+a = rgb2gray(imread('earth.tif'));
+lap = [1 1 1; 1 -8 1; 1 1 1];
+resp = uint8(filter2(lap, a, 'same'));
+sharpened = imsubtract(a, resp);
+figure; 
+subplot(1,3,1);imshow(a); title('Original image');
+subplot(1,3,2);imshow(resp); title('Laplacian filtered image');
+subplot(1,3,3);imshow(sharpened); title('Sharpened image');
+
+Output:
+ 
+13.	Write a program to enhance the image using high boost filter 
+
+A=input('Enter value of A :');
+image4=imread('earth.tif');
+image4=rgb2gray(image4);
+
+mask5=[-1 -1 -1;-1 A+8 -1;-1 -1 -1];
+image6=conv2(double(image4),double(mask5));
+
+figure;
+subplot(2,1,1);
+imshow(image4);
+title('Original Image');
+subplot(2,1,2);
+imshow(image6);
+title('High Boost Filter');
+
+Output:
+Enter the value of A = 
+5
+
+ 
+
+
+
+
+
+14.	Write a program to perform point detection  
+
+clc;
+clear all;
+close all;
+f = imread('cameraman.bmp');
+w=[-1,-1,-1;-1,8,-1;-1,-1,-1];
+g=abs(imfilter(double(f),w));
+T=max(g(:));
+g=g>=T; %(T given threshold)
+subplot(121),imshow(f),title('original image');
+subplot(122),imshow(g),title('Result of point detection');
+
+Output:
+
+ 
+
+15.	Write a program to perform vertical edge detection  
+
+clc; clear all; close all;
+
+im=rgb2gray(imread('butterfly.tif'));
+I=double(im);
+In=I;
+m=[1 0 -1;1 0 -1;1 0 -1];
+m=flipud(m);
+m=fliplr(m);
+
+for i=2:size(I,1)-1
+    for j=2:size(I,2)-1
+        neighbour_matrix=m.*In(i-1:i+1,j-1:j+1);
+        avg_value=sum(neighbour_matrix(:));
+        I(i,j)=avg_value;
+    end
+end
+subplot(2,2,1), imshow(im), title('Original Image');
+subplot(2,2,2), imshow(uint8(I)), title('Vertical Edge Detected Image');
+
+Output:
+ 
+
+16.	Write a program to perform Robert operator on the given image
+
+I = imread('Tom1.jpg');
+G = rgb2gray(I);
+F = edge(G, 'roberts');
+figure; imshow(I); title('Original Image');
+figure; imshow(G); title('Gray Image');
+figure; imshow(F); title('Detected Edges');
+
+Output:
+   
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+17.	Write a program to perform Prewitt operator on the given image  
+
+clc;
+clear all;
+close all;
+r=imread('cameraman.bmp');
+r=imresize(r,[256,256]);
+figure(2);
+subplot(4,1,1);imshow(r);title('Original image using prewitt');
+ss=[zeros(1,256);r;zeros(1,256)];
+r1=double([zeros(258,1),ss,zeros(258,1)]);
+[z,x]=size(r);
+w1=double(([-1 -1 -1;0 0 0;1 1 1]));
+w2=w1;
+st=1;
+en=3;
+st2=1;
+en2=3;
+for i=2:1:z+1
+    for j=2:1:x+1
+        q=(w1(1,1)*r1(i-1,j-1))+(w1(1,2)*r1(i-1,j))+(w1(1,3)*r1(i-1,j+1));
+        q=q+(w1(2,1)*r1(i,j-1))+(w1(2,2)*r1(i,j))+(w1(2,3)*r1(i,j+1));
+        q=q+(w1(3,1)*r1(i+1,j-1))+(w1(3,2)*r1(i+1,j))+(w1(3,3)*r1(i+1,j+1));
+        sx(i-1,j-1)=q;
+        q=(w2(1,1)*r1(i-1,j-1))+(w2(1,2)*r1(i-1,j))+(w2(1,3)*r1(i-1,j+1));
+        q=q+(w2(2,1)*r1(i,j-1))+(w2(2,2)*r1(i,j))+(w2(2,3)*r1(i,j+1));
+        q=q+(w2(3,1)*r1(i+1,j-1))+(w2(3,2)*r1(i+1,j))+(w2(3,3)*r1(i+1,j+1));
+        sy(i-1,j-1)=q;
+    end  
+end
+ subplot(4,1,2);
+ imshow(uint8(sx));title('x gradient');
+  subplot(4,1,3);
+  imshow(uint8(sy));title('y gradient');
+s=sx+sy;
+subplot(4,1,4),imshow(uint8(s));title('Resultant image');
+
+Output:
+ 
+
+
+18.	Write a program to perform Sobel operator on the given image  
+
+clc
+clear all
+close all
+a=imread('cameraman.bmp');
+subplot(2,2,1);
+imshow(a);
+title('original image using sobel');
+w1= [-1 -2 -1;0 0 0;1 2 1];
+w2= [-1 0 1;-2 0 2;-1 0 1];
+[row col]=size(a);
+for x=2:1:row-1
+ for y=2:1:col-1
+ a1(x,y)=w1(1)*a(x-1,y-1)+w1(2)*a(x-1,y)+w1(3)*...
+ a(x-1,y+1)+w1(4)*a(x,y-1)+w1(5)*a(x,y)+w1(6)*...
+ a(x,y+1)+w1(7)*a(x+1,y-1)+w1(8)*a(x+1,y)+w1(9)*...
+ a(x+1,y+1);
+ a2(x,y)=w2(1)*a(x-1,y-1)+w2(2)*a(x-1,y)+w2(3)*...
+ a(x-1,y+1)+w2(4)*a(x,y-1)+w2(5)*a(x,y)+w2(6)*...
+ a(x,y+1)+w2(7)*a(x+1,y-1)+w2(8)*a(x+1,y)+w2(9)*...
+ a(x+1,y+1);
+ end
+end
+subplot(2,2,2);
+imshow(a1);
+title('y-gradient');
+subplot(2,2,3);
+imshow(a2);
+title('x-gradient'); 
+output=a1+a2;
+subplot(2,2,4);
+imshow(output);
+title('Edge Detection');
+
+Output:
+ 
+
+
+
+
+
+
+
+
+
+19.	To plot the histogram of an image (Dark ,light ,low contrast, high contrast) 
+
+clc; clear all; close all;
+
+I=imread('dark.jpg');
+subplot(4,2,1),imshow(I),title('Image with dark contrast');
+subplot(4,2,2),imhist(I),title('Histogram of dark contrast');
+A=imread('bright.jpg');
+subplot(4,2,3),imshow(A),title('Image with bright contrast');
+subplot(4,2,4),imhist(A),title('Histogram of bright contrast');
+B=imread('lowcontrast2.jpg');
+subplot(4,2,5),imshow(B),title('Image with low contrast');
+subplot(4,2,6),imhist(B),title('Histogram of low contrast');
+C=imread('highcontrast.jpeg');
+subplot(4,2,7),imshow(C),title('Image with high contrast');
+subplot(4,2,8),imhist(C),title('Histogram of high contrast');
+
+Output:
+   
+20.	To perform histogram equalisation on the given image 
+I = imread("cameraman.tif");
+subplot(2,2,1)
+imshow(I)
+title('Original image')
+subplot(2,2,2)
+imhist(I)
+title('Histogram of original Image')
+
+J = histeq(I);
+subplot(2,2,3)
+imshow(J)
+title('Histogram Equalized Image')
+subplot(2,2,4)
+imhist(J)
+title('Histogram of Equalized Image')
+
+Output:  
+21.	To implement inverse filter over image. 
+
+  clc; clear all; close all;
+
+I=imread('sunflower.jpg');
+subplot(1,3,1),imshow(I),title('Original Image');
+a=im2double(I);
+
+PSF=fspecial('motion',21,11);
+a_blurred=imfilter(a,PSF,'conv','circular');
+subplot(1,3,2),imshow(a_blurred),title('Degraded Image');
+
+DD=deconvreg(a_blurred,PSF);
+subplot(1,3,3),imshow(DD),title('Restored Image');
+
+Output:
+ 
+22.	To implement wiener filter over image .
+
+clc; clear all; close all;
+
+I=imread('sunflower.jpg');
+subplot(1,3,1),imshow(I),title('Original Image');
+a=im2double(I);
+
+PSF=fspecial('motion',21,11);
+a_blurred=imfilter(a,PSF,'conv','circular');
+subplot(1,3,2),imshow(a_blurred),title('Degraded Image');
+
+wnr1=deconvwnr(a_blurred,PSF);
+subplot(1,3,3),imshow(wnr1),title('Restored Image');
+
+Output:
+ 
